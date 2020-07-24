@@ -1,5 +1,8 @@
-"""Get a list of Messages from the user's mailbox.
-"""
+
+# It get a list of Messages from the user's mailbox then
+# extract information from the body of the email the maximum 
+# number of emails existing on the selected day.
+
 from __future__ import print_function
 import pickle
 import os.path
@@ -91,9 +94,9 @@ def getEmail(date):
     service = build('gmail', 'v1', credentials=creds)
 
     if dtAfter == datetime.strftime(datetime.now(), '%m/%d/%Y'):
-        a = ListMessagesMatchingQuery(service,'automation.marketdatalatam@gmail.com','label:Caracas after:'+dtAfter)
+        a = ListMessagesMatchingQuery(service,'<EMAIL GMAIL ACCOUNT>','label:Caracas after:'+dtAfter)
     else:
-        a = ListMessagesMatchingQuery(service,'automation.marketdatalatam@gmail.com','label:Caracas after:'+dtAfter+' before:'+dtBefore) 
+        a = ListMessagesMatchingQuery(service,'<EMAIL GMAIL ACCOUNT>','label:Caracas after:'+dtAfter+' before:'+dtBefore) 
 
     result = []
 

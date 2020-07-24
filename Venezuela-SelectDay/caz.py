@@ -1,3 +1,7 @@
+# It make file to upload on Customer Zone
+# to client can see the new listed RICs and delisted RICs  
+
+
 from openpyxl import Workbook, load_workbook
 import pandas as pd
 from datetime import datetime

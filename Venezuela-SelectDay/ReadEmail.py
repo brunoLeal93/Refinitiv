@@ -1,3 +1,6 @@
+
+# It read and extract information from body emails.
+
 from GoogleAPI import getEmail
 from datetime import datetime, timedelta
 import os

@@ -1,3 +1,8 @@
+
+# Taking advantage of the Google API and the need to have a Front End 
+# to control some functions of the application, the use of Googles Sheets was implemented 
+# as a simple way to achieve the solution given the current situation.
+
 import gspread, os
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -44,6 +49,7 @@ def holidays():
     holidays = []
 
     dic = ws_holid.get_all_records()
+    print(dic)
     for d in dic:
         if d['Date'] != '':
             holidays.append(d['Date'])

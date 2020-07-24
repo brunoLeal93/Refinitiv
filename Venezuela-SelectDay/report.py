@@ -1,3 +1,6 @@
+# It make file to Market Owner send to another teams 
+# they also need to see the new listed RICs and delisted RICs.
+
 from openpyxl import Workbook, load_workbook
 import pandas as pd
 from datetime import datetime

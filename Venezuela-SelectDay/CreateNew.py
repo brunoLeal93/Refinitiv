@@ -1,3 +1,6 @@
+
+# It make and format excel files to they be used posteriorly.
+
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font, NamedStyle
 from openpyxl.styles.colors import RED, BLUE, BLACK

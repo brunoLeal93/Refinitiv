@@ -1,3 +1,7 @@
+
+# In addition to record final files locally,
+# Application also send the results by email.
+
 import mimetypes
 import os, glob
 import smtplib
@@ -11,11 +15,11 @@ from Config import sentmail, createDir, recipients
 from pprint import pprint
 
 class sendEmail:
-
-    TO = recipients()[0]
-    CC = recipients()[1]
+    rcpts = recipients()
+    TO = rcpts[0]
+    CC = rcpts[1]
     
-    def add_attach(self, msg, filename):
+    def addAttachment(self, msg, filename):
         if not os.path.isfile(filename):
             return
 
@@ -50,14 +54,14 @@ class sendEmail:
    
     def sendFilesVezuela(self, date, attachment):
         
-        de = 'automation.marketdatalatam@gmail.com'
-        msg = MIMEMultipart(self.TO)
-        msg['From'] = de
+        sender = '<EMAIL GMAIL ACCOUNT>'
+        msg = MIMEMultipart()
+        msg['From'] = sender
         msg['To'] = ', '.join(self.TO)
         msg['Cc'] = ', '.join(self.CC)
         msg['Subject'] = 'Update for Venezuela ' + date
 
-        # Body
+    
         html = ''' Update for Today!
         <br><br>
         <b>Atention:</b><br>
@@ -66,9 +70,10 @@ class sendEmail:
         '''
         body = MIMEText(html, 'html')
         msg.attach(body)
-
         
         aux= []
+
+        # Check on 'Sent Email' spreadsheet if files have already sent
         aux1 = sentmail('r')
         fsent = [x[1] for x in aux1]
         fsent = [x.split('/') for x in fsent]
@@ -81,18 +86,17 @@ class sendEmail:
         for i in range(len(attachment)):
 
             if attc[i] not in fsent:
-                # Arquivos anexos.
-                self.add_attach(msg, attachment[i]) 
+                self.addAttachment(msg, attachment[i]) 
                 aux.append([str(datetime.now()), attachment[i]])
 
-        # pprint()
         
+        #  Send if there are files have never sent
         if len(aux)>0:
             
             raw = msg.as_string()
             smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            smtp.login('<GMAIL ACCOUNT>', '<PASSWORD>')
-            smtp.sendmail(de, self.TO, raw)
+            smtp.login(sender, '<PASSWORD GMAIL ACCOUNT>')
+            smtp.sendmail(sender, self.TO + self.CC, raw)
             smtp.quit()
             sentmail('w', aux1+aux)
             print('\nFiles Sent by email.\nYou also may access through "DATA" folder.')
